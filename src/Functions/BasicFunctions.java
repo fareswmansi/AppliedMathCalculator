@@ -60,19 +60,4 @@ public class BasicFunctions {
         return answer;
     }
 
-    public static void main(String[] args) {
-        int x = 44;
-        int y = 86;
-        int sum = Addition(x, y);
-       // System.out.print(sum);
-        int product = Multiplication(x, y);
-       // System.out.print(product);
-        int difference = Subtraction(x, y);
-       // System.out.print(difference);
-        double quotient = Division(x, y);
-       // System.out.print(quotient);
-        double answer = Power(x, y);
-        System.out.print(answer);
-    }
-
 }
