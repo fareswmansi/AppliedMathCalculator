@@ -144,8 +144,8 @@ public class LinearAlgebra {
                 System.out.print(testMe[i][k] + "|");
             }
             System.out.println();
-
         }
+        System.out.print(testMe[0][0]);
 
         // method for printing contents of multiplied matrix
 
