@@ -2,16 +2,25 @@ package Functions;
 
 // this class contains basic functions to compute matrix solutions, it is restricted to 3x3 matrices;
 public class LinearAlgebra {
-    int rows;
-    int col;
-    double[][] y;
-    double[][] x;
-    int[][] Perfect = {{1, 0, 0},{0, 1, 0},{0,0,1}};
+    private int rows;
+    private int col;
+    private double[][] y;
+    private double[][] x;
+    private int[][] Perfect = {{1, 0, 0},{0, 1, 0},{0,0,1}};
 
     //initialize x, y, x
-    public LinearAlgebra(double[][] x, double[][] y){
+    public LinearAlgebra(double[][] x, double[][] y, int rows, int col){
         this.x = x;
         this.y = y;
+        this.rows = 3;
+        this.col = 3;
+    }
+
+    // constructor that swaps rows
+    public static void swapRows(double[][] array, int rowA, int rowB){
+        double tmpRow[] = array[rowA];
+        array[rowA]=array[rowB];
+        array[rowB] = tmpRow;
     }
 
     //constructor gets the value of the discriminant of a 3x3 matrix
@@ -45,7 +54,36 @@ public class LinearAlgebra {
         int lead = 0;
         int row = 3;
         int col = 3;
-        double[][] finalMatrix = {{},{},{}};
+        double pivotOne = 0;
+        double makeMeZero = 0;
+        double makeThisZero = 0;
+        double[][] finalMatrix = {{0,0,0},{0,0,0},{0,0,0}};
+        //check if first element is == 0.
+        if (x[0][0] != 0){
+            pivotOne = x[0][0]; // finds value of first element in the first row
+            finalMatrix[0][0] = Math.round(pivotOne * (1/pivotOne)); // multiplies the first element by its inverse in order to make it a leading 1
+            finalMatrix[0][1] = x[0][1] * (1/pivotOne); // applying same transformation to the remainder of vector
+            finalMatrix[0][2] = x[0][2] * (1/pivotOne);
+            if (x[1][0] != 0){ // if the first element in the second row is non 0
+                if (x[2][0] != 0){ // if the first element in the third row is non 0
+                    makeMeZero = x[1][0]; // find the first element in the second row
+                    finalMatrix[1][0] = makeMeZero - (makeMeZero*(finalMatrix[0][0])); // make it a leading 1 by multiplying its inverse
+                    finalMatrix[1][1] = x[1][1] - (makeMeZero*(finalMatrix[0][1])); // applying transformation
+                    finalMatrix[1][2] = x[1][2] - (makeMeZero*(finalMatrix[0][2]));
+                } else if (x[2][0] == 0){
+                    swapRows(x, 1, 2); // swap rows 2 and 3
+                    makeThisZero = x[2][0];
+                    finalMatrix[2][0] = makeThisZero - (makeThisZero*(finalMatrix[0][0]));
+                    finalMatrix[2][1] = x[2][1] - (makeThisZero*finalMatrix[0][1]);
+                    finalMatrix[2][2] = x[2][2] - makeThisZero*finalMatrix[0][2];
+
+                }
+
+            }// end of 2nd if statement
+
+            //finalMatrix[0][1] = x[0][1] * (1/pivotOne);
+            //x[0][2] = x[0][2] * (1/pivotOne);
+        } // end of first if statement
 
 
         /*
@@ -68,8 +106,6 @@ public class LinearAlgebra {
          * As I progress through the steps, I need to do checks to see if a zero has been created in the spot I am trying to turn into a 1.
          * After every step I complete (from steps 1-6) I will check if there is a zero leading the remainder of the elements.
          * */
-
-
         return finalMatrix;
     }
 
@@ -95,21 +131,41 @@ public class LinearAlgebra {
 
     //test constructor to test other constructors
     public static void main(String[] args) {
-        double[][] x = {{1, 2, 3}, {4, 3, 2}, {3, 2, 1}};
+        double[][] x = {{6, 2, 3}, {4, 3, 2}, {0, 2, 1}};
         double[][] y = {{4, 2, 1}, {0, 8, 2}, {3, 2, 9}};
         double[][] product = MatrixMultiplication(x, y);
 
-        // method for printing contents of multiplied matrix
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++){
-                System.out.print(product[i][j] + "|");
+
+        double[][] testMe = RowEchelonForm(x);
+        System.out.print(testMe);
+
+        for (int i = 0; i < testMe.length; i++) {
+            for (int k = 0; k < testMe.length; k++){
+                System.out.print(testMe[i][k] + "|");
             }
             System.out.println();
+
         }
+
+        // method for printing contents of multiplied matrix
+
+
+        /*for (int i = 0; i < testMe.length; i++) {
+            for (int j = 0; j < testMe.length; i++){
+                System.out.print(testMe[i][j] + "|");
+            }
+            System.out.println();
+        }*/
+            //System.out.print(testMe[i] + "|");
+        //}
+        //System.out.print(testMe);
+
+
+
 
         // more test methods
         //System.out.print(product);
-        double disc = Discriminant(x);
+        //double disc = Discriminant(x);
         //System.out.print(disc);
     }
 }

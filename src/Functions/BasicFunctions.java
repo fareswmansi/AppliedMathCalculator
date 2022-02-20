@@ -4,7 +4,7 @@ package Functions;
 public class BasicFunctions {
     private int x;
     private int y;
-    int[] inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    private int[] inputs = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     //initialize inputs and makes sure inputs are part of the set numbers;
     public BasicFunctions(int x, int y) {
