@@ -1,5 +1,6 @@
 package Functions;
 
+// this class contains the basic functions (+, -, *, /, etc)
 public class BasicFunctions {
     private int x;
     private int y;

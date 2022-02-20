@@ -1,6 +1,6 @@
 package Functions;
 
-//this class contains basic functions to compute matrix solutions, it is restricted to 3x3 matrices;
+// this class contains basic functions to compute matrix solutions, it is restricted to 3x3 matrices;
 public class LinearAlgebra {
     double[][] y;
     double[][] x;
@@ -25,6 +25,20 @@ public class LinearAlgebra {
         return answer;
     }
 
+    //constructor computes matrix multiplication
+    public static double[][] MatrixMultiplication(double[][] x, double[][] y){
+        double[][] c = new double[3][3];
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++){
+                c[i][j] = 0;
+                for (int k = 0; k < 3; k++){
+                    c[i][j] += x[i][k]*y[k][j];
+                } // end of k loop
+            } // end of j loop
+        }// end of i loop
+        return c;
+    }
+
     //constructor puts matrix x into row echelon form
     public static double[][] RowEchelonForm(double[][] x){
         double[][] answer = {{}, {}, {}};
@@ -43,19 +57,13 @@ public class LinearAlgebra {
         return answer;
     }
 
-    //constructor computes matrix multiplication
-    public static double[][] MatrixMultiplication(double[][] x, double[][] y){
-        double[][] c = new double[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++){
-                c[i][j] = 0;
-                for (int k = 0; k < 3; k++){
-                    c[i][j] += x[i][k]*y[k][j];
-                } // end of k loop
-            } // end of j loop
-        }// end of i loop
-        return c;
-    }
+
+
+
+
+
+
+
 
     //test constructor to test other constructors
     public static void main(String[] args) {
@@ -75,11 +83,5 @@ public class LinearAlgebra {
         System.out.print(product);
         double disc = Discriminant(x);
         //System.out.print(disc);
-
-       // }
-
-
-
-
     }
 }
